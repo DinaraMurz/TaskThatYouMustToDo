@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlanAssistant
 {
-    public class FileDownloader
+    public class FileDownloader : Entity
     {
         public string Address { get; set; }
         public string Path { get; set; }

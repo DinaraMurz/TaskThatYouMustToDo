@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PlanAssistant
 {
-    public class Task
+    public class Task : Entity
     {
         public DateTime DateTime { get; set; }
         public Frequency Frequency { get; set; }
         public object TaskType { get; set; }
 
-        public void ChooseTaskType(string taskTypeName)
+        public void ChooseTaskType(string taskTypeName, string firstValue, string secondValue)
         {
             switch (taskTypeName)
             {
                 case "email":
-                    TaskType = TaskType as Email;
+                    TaskType = new Email {To = new MailAddress(firstValue)};
                     break;
                 case "downloadFile":
-                    TaskType = TaskType as FileDownloader;
+                    TaskType = new FileDownloader { Address = firstValue, Path = secondValue};
                     break;
                 case "moveCatalog":
-                    TaskType = TaskType as CatalogMoving;
+                    TaskType = new CatalogMoving { Source = firstValue, Destination = secondValue};
                     break;
                 default:
                     throw new Exception();

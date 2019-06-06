@@ -8,7 +8,7 @@ using System.Net;
 
 namespace PlanAssistant
 {
-    public class Email
+    public class Email : Entity
     {
         // отправитель - устанавливаем адрес и отображаемое в письме имя
         public MailAddress From { get; set; }
@@ -21,6 +21,9 @@ namespace PlanAssistant
 
         public void SendMessage(string header, string text)
         {
+            From = new MailAddress("dinara_myrzabek@mail.ru", "Dinara");
+
+
             MailMessage m = new MailMessage(From, To);
 
             m.Subject = header;

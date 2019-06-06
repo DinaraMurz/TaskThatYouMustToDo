@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PlanAssistant
 {
-    public class CatalogMoving
+    public class CatalogMoving : Entity
     {
         public string Source { get; set; }
         public string Destination { get; set; }

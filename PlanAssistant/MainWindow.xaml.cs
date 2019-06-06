@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,13 +59,39 @@ namespace PlanAssistant
 
         private void ReadyButtonClick(object sender, RoutedEventArgs e)
         {
-
-            tasks.Add(
+            try
+            {
+                tasks.Add(
                 new Task
                 {
                     DateTime = new DateTime(datePicker.SelectedDate.Value.Ticks + timePicker.SelectedTime.Value.Ticks),
-                    Frequency = FrequrencyByNameReturing(frequencyComboBox.SelectionBoxItemStringFormat)
+                    Frequency = FrequrencyByNameReturing(frequencyComboBox.SelectionBoxItemStringFormat),
+                    TaskType = new object(),
                 });
+
+                switch (typeComboBox.SelectedIndex)
+                {
+                    case 0:
+                        //tasks[tasks.Count - 1].ChooseTaskType("email", firstTextBox.Text, secondTextBox.Text);
+                        SendMessage(firstTextBox.Text, "", secondTextBox.Text);
+                        break;
+                    case 1:
+                        tasks[tasks.Count - 1].ChooseTaskType("downloadFile", firstTextBox.Text, secondTextBox.Text);
+                        break;
+                    case 2:
+                        tasks[tasks.Count - 1].ChooseTaskType("moveCatalog", firstTextBox.Text, secondTextBox.Text);
+                        break;
+                }
+                ////База данных не сохраняет данные, что-то одинаковое
+                //using (var context = new AppContext())
+                //{
+                //    context.Tasks.Add(tasks[tasks.Count - 1]);
+                //}
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private Frequency FrequrencyByNameReturing(string name)
@@ -84,7 +112,6 @@ namespace PlanAssistant
                 case "раз в год":
 
                     break;
-                    
             }
 
             return frequency;
@@ -93,6 +120,26 @@ namespace PlanAssistant
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        public void SendMessage(string mail, string header, string text)
+        {
+            MailAddress From;
+            MailAddress To;
+
+            From = new MailAddress("dinara_myrzabek@mail.ru", "Dinara");
+            To = new MailAddress(mail, "");
+
+            MailMessage m = new MailMessage(From, To);
+
+            m.Subject = header;
+            m.Body = text;
+            m.IsBodyHtml = true;
+            // адрес smtp-сервера и порт, с которого будем отправлять письмо
+            SmtpClient smtp = new SmtpClient(From.Address, -875);
+            smtp.Credentials = new NetworkCredential(From.Address, "J21Z9Z4U");
+            smtp.EnableSsl = true;
+            smtp.Send(m);
         }
     }
 }

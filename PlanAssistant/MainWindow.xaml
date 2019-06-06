@@ -50,8 +50,8 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="362,259,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="362,287,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="firstTextBox" HorizontalAlignment="Left" Height="23" Margin="362,259,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="secondTextBox" HorizontalAlignment="Left" Height="23" Margin="362,287,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
         <TextBlock Name="firstTextBlock" Text="" FontFamily="Segoe Script" Margin="109,253,165,137" />
         <TextBlock Name="secondTextBlock" FontFamily="Segoe Script" Margin="109,287,165,99" />
